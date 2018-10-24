@@ -705,6 +705,18 @@
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
+/datum/uplink_item/device_tools/syndidrone
+	name = "Remote Controle Drone"
+	desc = "Desc."
+	item = /obj/item/device/droneRC
+	cost = 10
+
+//for refunding the syndiedrone RC
+/datum/uplink_item/device_tools/syndidrone/spawn_item()
+	var/obj/item/device/droneRC/R = ..()
+	if(istype(R))
+		R.TC_cost = cost
+
 // IMPLANTS
 
 /datum/uplink_item/implants
