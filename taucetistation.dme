@@ -1466,6 +1466,7 @@
 #include "code\modules\mob\living\silicon\robot\drone\drone_manufacturer.dm"
 #include "code\modules\mob\living\silicon\robot\syndi\component.dm"
 #include "code\modules\mob\living\silicon\robot\syndi\syndiborg.dm"
+#include "code\modules\mob\living\silicon\robot\syndi\syndidrone.dm"
 #include "code\modules\mob\living\simple_animal\bees.dm"
 #include "code\modules\mob\living\simple_animal\borer.dm"
 #include "code\modules\mob\living\simple_animal\constructs.dm"

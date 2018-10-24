@@ -391,6 +391,18 @@
 
 	emag.name = "Hand tele"
 
+/obj/item/weapon/robot_module/syndidrone
+	name = "Syndicate drone module"
+
+/obj/item/weapon/robot_module/syndidrone/atom_init()
+	. = ..()
+	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/weapon/extinguisher/mini(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/gripper/universal(src)
+
+	//emag =
+
 /obj/item/weapon/robot_module/drone
 	name = "drone module"
 	stacktypes = list(

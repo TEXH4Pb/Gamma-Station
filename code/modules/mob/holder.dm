@@ -78,6 +78,13 @@
 	icon_state = "drone"
 	origin_tech = "magnets=3;engineering=5"
 
+/obj/item/weapon/holder/syndidrone
+
+	name = "maintenance drone"
+	desc = "It's a small maintenance robot. It looks a bit strange."
+	icon_state = "drone"
+	origin_tech = "magnets=3;engineering=2;syndicate=3"
+
 
 /obj/item/weapon/holder/cat
 
