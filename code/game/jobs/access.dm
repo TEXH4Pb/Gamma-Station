@@ -131,9 +131,6 @@
 /mob/living/silicon/robot/syndicate/GetAccess()
 	return list(access_maint_tunnels, access_syndicate, access_external_airlocks) //syndicate basic access
 
-/mob/living/silicon/robot/syndidrone/GetAccess()//TODO: add access from the id which is hold in gripper
-	return list(access_maint_tunnels, access_syndicate, access_external_airlocks) //syndicate basic access
-
 /obj/item/proc/GetID()
 	return null
 

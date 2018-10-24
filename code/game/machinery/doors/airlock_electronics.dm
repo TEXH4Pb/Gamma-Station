@@ -15,7 +15,7 @@
 	var/broken = FALSE
 
 	attack_self(mob/user)
-		if (!ishuman(user) && !istype(user,/mob/living/silicon/robot/drone))
+		if (!ishuman(user) && !istype(user,/mob/living/silicon/robot/drone/maintaince/))
 			return ..(user)
 
 		var/mob/living/carbon/human/H = user

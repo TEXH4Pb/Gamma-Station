@@ -403,7 +403,7 @@
 
 	//emag =
 
-/obj/item/weapon/robot_module/drone
+/obj/item/weapon/robot_module/maintdrone
 	name = "drone module"
 	stacktypes = list(
 		/obj/item/stack/sheet/wood/cyborg = 1,
@@ -417,7 +417,7 @@
 		/obj/item/stack/cable_coil/cyborg = 30
 		)
 
-/obj/item/weapon/robot_module/drone/atom_init()
+/obj/item/weapon/robot_module/maintdrone/atom_init()
 	. = ..()
 	modules += new /obj/item/weapon/weldingtool(src)
 	modules += new /obj/item/weapon/screwdriver(src)
@@ -438,10 +438,10 @@
 		W.set_amount(stacktypes[T])
 		modules += W
 
-/obj/item/weapon/robot_module/drone/add_languages(mob/living/silicon/robot/R)
+/obj/item/weapon/robot_module/maintdrone/add_languages(mob/living/silicon/robot/R)
 	return	//not much ROM to spare in that tiny microprocessor!
 
-/obj/item/weapon/robot_module/drone/respawn_consumable(mob/living/silicon/robot/R)
+/obj/item/weapon/robot_module/maintdrone/respawn_consumable(mob/living/silicon/robot/R)
 	var/obj/item/weapon/reagent_containers/spray/cleaner/C = locate() in src.modules
 	C.reagents.add_reagent("cleaner", 3)
 

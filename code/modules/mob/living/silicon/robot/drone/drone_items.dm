@@ -168,6 +168,102 @@
 
 				user.visible_message("\red [user] removes the power cell from [A]!", "You remove the power cell.")
 
+/obj/item/weapon/gripper/universal
+
+	can_hold = null //List of items which this object can grap (if set, it can't store anything else)
+	var/list/cant_hold = null //List of items which this object can't grap (in effect only if can_hold isn't set)
+	var/max_item_size = ITEM_SIZE_SMALL//Max size of items that this object can grap (in effect only if can_hold isn't set)
+
+/obj/item/weapon/gripper/universal/afterattack(atom/target, mob/living/user, flag, params)
+
+	if(!target || !flag) //Target is invalid or we are not adjacent.
+		return
+
+	//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
+	//if(!wrapped)
+	//	for(var/obj/item/thing in src.contents)
+	//		wrapped = thing
+	//		break
+
+	if(wrapped) //Already have an item.
+
+		wrapped.loc = user
+		//Pass the attack on to the target.
+		target.attackby(wrapped,user)
+
+		if(wrapped && src && wrapped.loc == user)
+			wrapped.loc = src
+
+		//Sanity/item use checks.
+
+		if(!wrapped || !user)
+			return
+
+		if(wrapped.loc != src.loc)
+			wrapped = null
+			return
+
+	if(istype(target,/obj/item)) //Check that we're not pocketing a mob.
+
+		//...and that the item is not in a container.
+		//if(!isturf(target.loc))
+		//	return
+
+		var/obj/item/I = target
+		var/grab = 0
+
+		if(can_hold)
+			for(var/typepath in can_hold)
+				if(istype(I,typepath))
+					grab = 1
+					break
+		else if(I.w_class <= max_item_size)
+			grab = 1
+			for(var/typepath in cant_hold)
+				if(istype(I,typepath))
+					grab = 0
+					break
+
+		//We can grab the item, finally.
+		if(grab)
+			to_chat(user, "You collect \the [I].")
+			I.loc = src
+			wrapped = I
+			return
+		else
+			to_chat(user, "\red Your gripper cannot hold \the [target].")
+
+	else if(istype(target,/obj/machinery/power/apc))
+		var/obj/machinery/power/apc/A = target
+		if(A.opened)
+			if(A.cell)
+				var/grab = 0
+				if(can_hold)
+					for(var/typepath in can_hold)
+						if(istype(A.cell,typepath))
+							grab = 1
+							break
+				else if(w_class <= max_item_size)
+					grab = 1
+					for(var/typepath in cant_hold)
+						if(istype(A.cell,typepath))
+							grab = 0
+							break
+				if(grab)
+					wrapped = A.cell
+
+					A.cell.add_fingerprint(user)
+					A.cell.updateicon()
+					A.cell.loc = src
+					A.cell = null
+
+					A.charging = 0
+					A.update_icon()
+
+					user.visible_message("\red [user] removes the power cell from [A]!", "You remove the power cell.")
+				else
+					to_chat(user, "\red Your gripper cannot hold \the [A.cell].")
+
 //TODO: Matter decompiler.
 /obj/item/weapon/matter_decompiler
 
@@ -306,7 +402,7 @@
 		return
 
 	if(!module)
-		module = new /obj/item/weapon/robot_module/drone(src)
+		module = new /obj/item/weapon/robot_module/maintdrone(src)
 
 	var/dat = "<HEAD><TITLE>Drone modules</TITLE></HEAD><BODY>\n"
 	dat += {"
@@ -353,7 +449,7 @@
 	src << browse(entity_ja(dat), "window=robotmod")
 
 //Putting the decompiler here to avoid doing list checks every tick.
-/mob/living/silicon/robot/drone/use_power()
+/mob/living/silicon/robot/drone/maintaince/use_power()
 
 	..()
 	if(!src.has_power || !decompiler)
