@@ -320,7 +320,7 @@
 				if(istype(I,typepath))
 					grab = 1
 					break
-		else if(w_class <= max_item_size)
+		else if(I.w_class <= max_item_size)
 			grab = 1
 			for(var/typepath in cant_hold)
 				if(istype(I,typepath))
