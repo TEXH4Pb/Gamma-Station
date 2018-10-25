@@ -711,12 +711,6 @@
 	item = /obj/item/device/droneRC
 	cost = 10
 
-//for refunding the syndiedrone RC
-/datum/uplink_item/device_tools/syndidrone/spawn_item()
-	var/obj/item/device/droneRC/R = ..()
-	if(istype(R))
-		R.TC_cost = cost
-
 // IMPLANTS
 
 /datum/uplink_item/implants

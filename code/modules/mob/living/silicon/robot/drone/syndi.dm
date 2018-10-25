@@ -23,7 +23,6 @@
 
 	radio = new /obj/item/device/radio/borg/syndicate(src)
 	module = new /obj/item/weapon/robot_module/syndidrone(src)
-	//set_zeroth_law("Only [master.real_name] and people he designates as being such are Syndicate Agents.")
 	laws = new /datum/ai_laws/syndicate_override()
 
 	//We need to screw with their HP a bit.
